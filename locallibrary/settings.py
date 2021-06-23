@@ -30,9 +30,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-an^ktwnxd@)2xy
 # DEBUG = True
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = [
-    'cryptic-headland-56480.herokuapp.com',
-]
+ALLOWED_HOSTS = ['cryptic-headland-56480.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
