@@ -1,36 +1,33 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
+    <div class="card bg-light col-md-4 offset-md-4 col-sm-6 offset-sm-3 col-8 offset-2 text-center">
 
-    {% if form.errors %}
-        <p>Your username and password didn't match. Please try again.</p>
-    {% endif %}
-
-    {% if next %}
-        {% if user.is_authenticated %}
-            <p>Your account doesn't have access to this page. To proceed, please login with an account that has access.</p>
-        {% else %}
-            <p>Please login to see this page.</p>
+        {% if form.errors %}
+            <p class="p-2" style="background-color:#EDF7FF;">Your username and password didn't match. Please try again.</p>
         {% endif %}
-    {% endif %}
 
-    <form method="post" action="{% url 'login' %}">
-        {% csrf_token %}
-        <table>
-            <tr>
-                <td>{{ form.username.label_tag }}</td>
-                <td>{{ form.username }}</td>
-            </tr>
-            <tr>
-                <td>{{ form.password.label_tag }}</td>
-                <td>{{ form.password }}</td>
-            </tr>
-        </table>
-        <input type="submit" value="login" />
-        <input type="hidden" name="next" value="{{ next }}">
-    </form>
+        {% if next %}
+            {% if user.is_authenticated %}
+                <p class="p-2" style="background-color:#FFEEFF;">Your account doesn't have access to this page. To proceed, please login with an account that has access.</p>
+            {% else %}
+                <p class="p-2" style="background-color:#FFEEFF;">Please login to see this page.</p>
+            {% endif %}
+        {% endif %}
+        <div class="card-body">
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                <h3 class="mb-3 fw-normal">ログイン</h3>
+                {{ form.username }}
+                {{ form.password }}
+                <button type="submit" class="w-100 mt-5 btn btn-lg btn-primary">ログイン</button>
+                <input type="hidden" name="next" value="{{ next }}">
+            </form>
+        </div>
+
+    </div>
 
     {# Assumes you setup the password_reset view in your URLconf #}
-    <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+    <!-- <p><a href="{% url 'password_reset' %}">Lost password?</a></p> -->
 
 {% endblock %}

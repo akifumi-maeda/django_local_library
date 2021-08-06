@@ -125,18 +125,30 @@ def renew_book_librarian(request, pk):
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
-from catalog.models import Author
+from .forms import AuthorCreateForm, BookCreateForm
 
 class AuthorCreate(PermissionRequiredMixin, CreateView):
     model = Author
-    fields = ['first_name', 'last_name', 'date_of_birth', 'date_of_death']
+    form_class = AuthorCreateForm
+    # fields = ['first_name', 'last_name', 'date_of_birth', 'date_of_death']
     initial =  {'date_of_death': '11/06/2020'}
     permission_required = 'catalog.can_mark_returned'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Authorを新規作成'
+        return context
+
 class AuthorUpdate(PermissionRequiredMixin, UpdateView):
     model = Author
-    fields = '__all__' # Not recommended (potential security issue if more fields added)
+    form_class = AuthorCreateForm
+    # fields = '__all__' # Not recommended (potential security issue if more fields added)
     permission_required = 'catalog.can_mark_returned'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Authorを更新'
+        return context
 
 class AuthorDelete(PermissionRequiredMixin, DeleteView):
     model = Author
@@ -145,13 +157,25 @@ class AuthorDelete(PermissionRequiredMixin, DeleteView):
 
 class BookCreate(PermissionRequiredMixin, CreateView):
     model = Book
-    fields =  ['title', 'author', 'summary', 'isbn', 'genre', 'language']
+    form_class = BookCreateForm
+    # fields =  ['title', 'author', 'summary', 'isbn', 'genre', 'language']
     permission_required = 'catalog.can_mark_returned'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Bookを新規作成'
+        return context
 
 class BookUpdate(PermissionRequiredMixin, UpdateView):
     model = Book
-    fields =  ['title', 'author', 'summary', 'isbn', 'genre', 'language']
+    form_class = BookCreateForm
+    # fields =  ['title', 'author', 'summary', 'isbn', 'genre', 'language']
     permission_required = 'catalog.can_mark_returned'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Bookを更新'
+        return context
 
 class BookDelete(PermissionRequiredMixin, DeleteView):
     model = Book

@@ -1,7 +1,13 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-    <h1>Title: {{ book.title }}</h1>
+    <div class="mt-3 d-flex justify-content-between">
+        <h1 class="pb-2 border-bottom">Title: {{ book.title }}</h1>
+        <div>
+            <a class="text-info" href="{% url 'book-update' book.pk %}"><i class="fas fa-edit fa-3x"></i></a>
+            <a class="text-danger" href="{% url 'book-delete' book.pk %}"><i class="fas fa-trash fa-3x"></i></a>
+        </div>
+    </div>
 
     <p><strong>Author:</strong><a href="{{ book.author.get_absolute_url }}">{{ book.author }}</a></p>
     <p><strong>Summary:</strong>{{ book.summary }}</p>

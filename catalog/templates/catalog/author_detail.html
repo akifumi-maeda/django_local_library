@@ -1,7 +1,15 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-    <h1>Title: {{ author }}</h1>
+    <div class="mt-3 d-flex justify-content-between">
+        <h1 class="pb-2 border-bottom">Title: {{ author }}</h1>
+        {% if user.is_staff %}
+            <div>
+                <a class="text-info" href="{% url 'author-update' author.pk %}"><i class="fas fa-edit fa-3x"></i></a>
+                <a class="text-danger" href="{% url 'author-delete' author.pk %}"><i class="fas fa-trash fa-3x"></i></a>
+            </div>
+        {% endif %}
+    </div>
 
     <p>{{ author.date_of_birth}} - {% if author.date_of_death %}{{ author.date_of_death }}{% endif %}</p>
 

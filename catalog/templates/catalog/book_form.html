@@ -1,11 +1,10 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-    <form action="" method="post">
+    <form class="w-50 mx-auto my-5" action="" method="post">
+        <h3 class="text-center mb-3 fw-normal">{{ title }}</h3>
         {% csrf_token %}
-        <table>
-            {{ form.as_table }}
-        </table>
-        <input type="submit" value="Submit">
+        {{ form.as_p }}
+        <button type="submit" class="mt-3 w-100 btn btn-primary">Submit</button>
     </form>
 {% endblock %}
