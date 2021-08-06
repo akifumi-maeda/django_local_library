@@ -4,7 +4,7 @@
     <h1>Borrowed books</h1>
 
     {% if bookinstance_list %}
-        <ul class="list-group list-group-flush">
+        <ul class="mt-3 list-group list-group-flush">
             {% for bookinst in bookinstance_list %}
                 <li class="{% if bookinst.is_overdue %}text-danger{% endif %} list-group-item">
                     <a href="{% url 'book-detail' bookinst.book.pk %}">{{bookinst.book.title}}</a> ({{ bookinst.due_back }})
