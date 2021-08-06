@@ -137,6 +137,7 @@ class AuthorCreate(PermissionRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Authorを新規作成'
+        context['create'] = True
         return context
 
 class AuthorUpdate(PermissionRequiredMixin, UpdateView):
@@ -164,6 +165,7 @@ class BookCreate(PermissionRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Bookを新規作成'
+        context['create'] = True
         return context
 
 class BookUpdate(PermissionRequiredMixin, UpdateView):

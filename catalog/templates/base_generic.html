@@ -47,7 +47,7 @@
               {% if user.is_authenticated %}
                 <li class="nav-item ps-3 mt-2 text-muted">User: {{ user.get_username }}</li>
 
-                <li class="nav-item"><a class="nav-link" href="{% url 'my-borrowed' %}"><i class="fas fa-book-reader pe-1"></i>My Borrowed</a></li>
+                <li class="nav-item"><a class="nav-link {% block active_my_borrowed %}{% endblock %}" href="{% url 'my-borrowed' %}"><i class="fas fa-book-reader pe-1"></i>My Borrowed</a></li>
 
                 <li class="nav-item"><a class="nav-link" href="{% url 'logout'%}?next={{request.path}}"><i class="fas fa-sign-out-alt pe-1"></i>Logout</a></li>
               {% else %}
@@ -59,9 +59,9 @@
               <hr />
               <ul class="nav flex-column">
                 <li class="nav-item ps-3 text-muted">Staff</li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'all-borrowed' %}"><i class="fas fa-book-open pe-1"></i>All borrowed</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'author-create' %}"><i class="fas fa-user-plus pe-1"></i>Create a new author</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'book-create' %}"><i class="fas fa-plus-circle pe-1"></i>Create a new book</a></li>
+                <li class="nav-item"><a class="nav-link {% block active_all_borrowed %}{% endblock %}" href="{% url 'all-borrowed' %}"><i class="fas fa-book-open pe-1"></i>All borrowed</a></li>
+                <li class="nav-item"><a class="nav-link {% block active_author_create %}{% endblock %}" href="{% url 'author-create' %}"><i class="fas fa-user-plus pe-1"></i>Create a new author</a></li>
+                <li class="nav-item"><a class="nav-link {% block active_book_create %}{% endblock %}" href="{% url 'book-create' %}"><i class="fas fa-plus-circle pe-1"></i>Create a new book</a></li>
               </ul>
             {% endif %}
 
