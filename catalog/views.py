@@ -41,19 +41,45 @@ def index(request):
 
 from django.views import generic
 
+from .forms import PaginateByForm
 class BookListView(generic.ListView):
     model = Book
-    paginate_by = 10 # as soon as you have more than 10 records the view will start paginating the data it sends to the template
-    # context_object_name = 'my_book_list' # your own name for list as a template variable
-    # queryset = Book.objects.filter(title__icontains='war')[:5] # Get 5 books containing the title war
-    # template_name = 'books/my_arbitrary_template_name_list.html'  # Specify your own template name/location
+    paginate_by = 5
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["paginate_by_form"] = PaginateByForm(self.request.session)
+        return context
+
+    def get_paginate_by(self, queryset):
+        if 'paginate_by' in self.request.GET:
+            self.request.session['paginate_by'] = int(self.request.GET.get('paginate_by'))
+        if 'paginate_by' in self.request.session:
+            return self.request.session.get('paginate_by')
+        else:
+            print(int(self.request.GET.get('paginate_by', self.paginate_by)))
+            return int(self.request.GET.get('paginate_by', self.paginate_by))
 
 class BookDetailView(generic.DetailView):
     model = Book
 
 class AuthorListView(generic.ListView):
     model = Author
-    paginate_by = 10
+    paginate_by = 5
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["paginate_by_form"] = PaginateByForm(self.request.session)
+        return context
+
+    def get_paginate_by(self, queryset):
+        if 'paginate_by' in self.request.GET:
+            self.request.session['paginate_by'] = int(self.request.GET.get('paginate_by'))
+        if 'paginate_by' in self.request.session:
+            return self.request.session.get('paginate_by')
+        else:
+            print(int(self.request.GET.get('paginate_by', self.paginate_by)))
+            return int(self.request.GET.get('paginate_by', self.paginate_by))
 
 class AuthorDetailView(generic.DetailView):
     model = Author

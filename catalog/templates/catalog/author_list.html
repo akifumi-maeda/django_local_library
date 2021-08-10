@@ -16,3 +16,8 @@
 {% endblock %}
 
 {% block active_authors %}active{% endblock %}
+
+{% block js %}
+    {% load static %}
+    <script src="{% static 'js/handlePaginateByForm.js' %}"></script>
+{% endblock %}

@@ -50,3 +50,17 @@ class BookCreateForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs["class"] = "form-control mb-3"
+
+class PaginateByForm(forms.Form):
+    '''ユーザー指定ぺージネイション'''
+    paginate_by = forms.ChoiceField(
+        choices=(
+            (5, '5'),
+            (10, '10'),
+            (15, '15'),
+            (25, '25'),
+            (50, '50'),
+        ),
+        required=True,
+        widget=forms.widgets.Select(attrs={'class': 'form-select'},),
+    )
