@@ -59,6 +59,7 @@
               <hr />
               <ul class="nav flex-column">
                 <li class="nav-item ps-3 text-muted">Staff</li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}"><i class="fas fa-cogs pe-1"></i>Administration</a></li>
                 <li class="nav-item"><a class="nav-link {% block active_all_borrowed %}{% endblock %}" href="{% url 'all-borrowed' %}"><i class="fas fa-book-open pe-1"></i>All borrowed</a></li>
                 <li class="nav-item"><a class="nav-link {% block active_author_create %}{% endblock %}" href="{% url 'author-create' %}"><i class="fas fa-user-plus pe-1"></i>Create a new author</a></li>
                 <li class="nav-item"><a class="nav-link {% block active_book_create %}{% endblock %}" href="{% url 'book-create' %}"><i class="fas fa-plus-circle pe-1"></i>Create a new book</a></li>
