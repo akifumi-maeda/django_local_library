@@ -40,11 +40,19 @@ def index(request):
     return render(request, 'index.html', context=context)
 
 from django.views import generic
-
+from django.db.models import Q
 from .forms import PaginateByForm
 class BookListView(generic.ListView):
     model = Book
     paginate_by = 5
+
+    def get_queryset(self):
+        search = self.request.GET.get('search')
+
+        if search:
+            return Book.objects.filter(Q(title__icontains=search) | Q(author__first_name__icontains=search) | Q(author__last_name__icontains=search))
+        else:
+            return Book.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -66,6 +74,14 @@ class BookDetailView(generic.DetailView):
 class AuthorListView(generic.ListView):
     model = Author
     paginate_by = 5
+
+    def get_queryset(self):
+        search = self.request.GET.get('search')
+
+        if search:
+            return Author.objects.filter(Q(first_name__icontains=search) | Q(last_name__icontains=search))
+        else:
+            return Author.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
