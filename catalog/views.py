@@ -191,6 +191,7 @@ class AuthorUpdate(PermissionRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Authorを更新'
+        context['update'] = True
         return context
 
 class AuthorDelete(PermissionRequiredMixin, DeleteView):
@@ -219,6 +220,7 @@ class BookUpdate(PermissionRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Bookを更新'
+        context['update'] = True
         return context
 
 class BookDelete(PermissionRequiredMixin, DeleteView):

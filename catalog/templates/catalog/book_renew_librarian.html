@@ -1,5 +1,14 @@
 {% extends "base_generic.html" %}
 
+{% block breadcrumb %}
+    <ol class="breadcrumb py-2 my-auto">
+        <li class="breadcrumb-item"><a href="{% url 'index' %}"><i class="fas fa-home pe-1"></i>Home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'books' %}">All books</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'book-detail' book_instance.book.pk %}">{{ book_instance.book.title }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Renew</li>
+    </ol>
+{% endblock %}
+
 {% block content %}
     <h1 class="mt-3 pb-2 border-bottom">Renew: {{ book_instance.book.title }}</h1>
     <p>Borrower: {{ book_instance.borrower }}</p>
@@ -8,6 +17,6 @@
     <form action="" method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Submitgit </button>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 {% endblock %}

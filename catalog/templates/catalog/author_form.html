@@ -1,5 +1,18 @@
 {% extends "base_generic.html" %}
 
+{% block breadcrumb %}
+    <ol class="breadcrumb py-2 my-auto">
+        <li class="breadcrumb-item"><a href="{% url 'index' %}"><i class="fas fa-home pe-1"></i>Home</a></li>
+        {% if create %}
+            <li class="breadcrumb-item active" aria-current="page">Create a new author</li>
+        {% elif update %}
+            <li class="breadcrumb-item"><a href="{% url 'authors' %}">All authors</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'author-detail' author.pk %}">{{ author }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Update</li>
+        {% endif %}
+    </ol>
+{% endblock %}
+
 {% block content %}
     <form class="w-50 mx-auto my-5" action="" method="post">
         <h3 class="text-center mb-3 fw-normal">{{ title }}</h3>
