@@ -106,8 +106,6 @@ class BookListView(generic.ListView):
         context = super().get_context_data(**kwargs)
         context['book_filter_form'] = BookFilterForm(self.request.GET)
         context['paginate_by_form'] = PaginateByForm(self.request.session)
-        context['genre'] = Genre.objects.all()
-        context['language'] = Language.objects.all()
         return context
 
     def get_paginate_by(self, queryset):
