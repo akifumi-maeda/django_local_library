@@ -41,22 +41,73 @@ def index(request):
 
 from django.views import generic
 from django.db.models import Q
-from .forms import PaginateByForm
+from .forms import BookFilterForm, PaginateByForm
+
 class BookListView(generic.ListView):
     model = Book
     paginate_by = 5
 
     def get_queryset(self):
+
+        book_list = Book.objects.all()
+
+        '''グローバル検索値を取得'''
         search = self.request.GET.get('search')
 
+        '''フィルター検索値を取得'''
+        f_kwargs ={}
+
+        filter_title =  self.request.GET.get('book_title')
+        if filter_title:
+            f_kwargs['title__icontains'] = filter_title
+
+        filter_first_name =  self.request.GET.get('author_first_name')
+        if filter_first_name:
+            f_kwargs['author__first_name__icontains'] = filter_first_name
+
+        filter_last_name =  self.request.GET.get('author_last_name')
+        if filter_last_name:
+            f_kwargs['author__last_name__icontains'] = filter_last_name
+
+        filter_genre = self.request.GET.get('genre_select')
+        if filter_genre:
+            f_kwargs['genre__pk'] = filter_genre
+
+        filter_language =  self.request.GET.get('language_select')
+        if filter_language:
+            f_kwargs['language__pk'] = filter_language
+
+        queries = [] # Qオブジェクトを格納するリスト
+
+        if f_kwargs:
+            q = Q(**f_kwargs)
+            queries.append(q)
+
+        if queries:
+            # filter(Q(...) & Q(...) & Q(...))を動的に行っている。
+            base_query = queries.pop()
+            for query in queries:
+                base_query &= query
+            book_list = book_list.filter(base_query)
+
+        print(book_list)
+
         if search:
+            # グローバル検索値からクエリを返す
             return Book.objects.filter(Q(title__icontains=search) | Q(author__first_name__icontains=search) | Q(author__last_name__icontains=search))
-        else:
+        elif search == '':
+            # グローバル検索値が空白の時、すべてのオブジェクトを返す
             return Book.objects.all()
+        else:
+            # Filterの検索値からクエリを返す
+            return book_list
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["paginate_by_form"] = PaginateByForm(self.request.session)
+        context['book_filter_form'] = BookFilterForm(self.request.GET)
+        context['paginate_by_form'] = PaginateByForm(self.request.session)
+        context['genre'] = Genre.objects.all()
+        context['language'] = Language.objects.all()
         return context
 
     def get_paginate_by(self, queryset):

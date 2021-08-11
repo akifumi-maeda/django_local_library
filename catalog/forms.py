@@ -64,3 +64,37 @@ class PaginateByForm(forms.Form):
         required=True,
         widget=forms.widgets.Select(attrs={'class': 'form-select'},),
     )
+
+from .models import Genre, Language
+
+class BookFilterForm(forms.Form):
+    book_title = forms.CharField(
+        max_length=200,
+        required=False,
+        label='Title',
+        widget=forms.TextInput(attrs={'class': 'form-control'}),
+    )
+    author_first_name = forms.CharField(
+        max_length=100,
+        required=False,
+        label='First name',
+        widget=forms.TextInput(attrs={'class': 'form-control'}),
+    )
+    author_last_name = forms.CharField(
+        max_length=100,
+        required=False,
+        label='Last name',
+        widget=forms.TextInput(attrs={'class': 'form-control'}),
+    )
+    genre_select = forms.ModelChoiceField(
+        Genre.objects.all(),
+        required=False,
+        label='Genre',
+        widget=forms.Select(attrs={'class': 'form-select'}),
+    )
+    language_select = forms.ModelChoiceField(
+        Language.objects.all(),
+        required=False,
+        label='Language',
+        widget=forms.Select(attrs={'class': 'form-select'}),
+    )
