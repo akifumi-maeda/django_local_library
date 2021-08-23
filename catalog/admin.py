@@ -18,6 +18,7 @@ class BookInline(admin.TabularInline):
 class AuthorAdmin(admin.ModelAdmin):
     list_display = ('last_name', 'first_name', 'date_of_birth', 'date_of_death')
     fields  = ['first_name', 'last_name', ('date_of_birth', 'date_of_death')]
+    search_fields = ['first_name', 'last_name']
     inlines = [BookInline]
 
 # Register the admin class with the associated model
@@ -32,6 +33,8 @@ class BooksInstanceInline(admin.TabularInline):
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
     list_display = ('title', 'author', 'display_genre')
+    list_filter = ('genre', 'language')
+    search_fields = ['title', 'author__first_name', 'author__last_name']
     inlines = [BooksInstanceInline]
 
 # Register the Admin classes for BookInstance using the decorator
@@ -39,6 +42,7 @@ class BookAdmin(admin.ModelAdmin):
 class BookInstanceAdmin(admin.ModelAdmin):
     list_display = ('book', 'status', 'borrower', 'due_back', 'id')
     list_filter = ('status', 'due_back')
+    search_fields = ['book__title']
 
     fieldsets = (
         (None, {
