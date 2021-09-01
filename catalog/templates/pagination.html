@@ -1,0 +1,41 @@
+<br>
+<div class="d-sm-flex justify-content-between">
+    {% if paginate_by_form %}
+    <div class="d-flex align-items-center">
+        <form class="paginate-by-form" action="" method="get">
+            {{ paginate_by_form.paginate_by }}
+        </form>
+        <span class="ms-2">rows per page</span>
+    </div>
+    {% endif %}
+
+    {% if is_paginated %}
+    <nav class="mt-2 mt-sm-0" aria-label="Page navigation">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ request.path }}?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+            {% for i in page_obj.paginator.page_range %}
+                {% if page_obj.number == i %}
+                    <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="{{ request.path }}?page={{i}}">{{i}}</a>
+                    </li>
+                {% else %}
+                    <li class=""page-item>
+                        <a class="page-link" href="{{ request.path }}?page={{i}}">{{i}}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ request.path }}?page={{ page_obj.next_page_number }}" aria-label="Next">&raquo;</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</div>
